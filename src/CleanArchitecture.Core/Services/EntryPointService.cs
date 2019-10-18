@@ -18,14 +18,22 @@ namespace CleanArchitecture.Core.Services
             _queueReceiver = queueReceiver;
             _queueSender = queueSender;
         }
+
         public async Task ExecuteAsync()
         {
             _logger.LogInformation("{service} running at: {time}", nameof(EntryPointService), DateTimeOffset.Now);
-
-            // read from the queue
-            await _queueReceiver.GetMessageFromQueue("");
-
-            // do some work
+            try
+            {
+                // read from the queue
+                await _queueReceiver.GetMessageFromQueue("");
+                // do some work
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{nameof(EntryPointService)}.{nameof(ExecuteAsync)} threw an exception.");
+                // TODO: Decide if you want to re-throw which will crash the worker service
+                //throw;
+            }
         }
     }
 }
