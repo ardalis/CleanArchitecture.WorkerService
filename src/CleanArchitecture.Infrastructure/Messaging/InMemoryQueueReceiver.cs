@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using CleanArchitecture.Core.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Messaging
