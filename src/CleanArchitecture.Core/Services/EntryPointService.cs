@@ -25,7 +25,8 @@ namespace CleanArchitecture.Core.Services
             try
             {
                 // read from the queue
-                await _queueReceiver.GetMessageFromQueue("");
+                await _queueReceiver.GetMessageFromQueue("randomqueuename");
+
                 // do some work
             }
             catch (Exception ex)

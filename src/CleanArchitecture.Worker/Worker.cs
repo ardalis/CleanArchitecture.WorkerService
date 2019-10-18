@@ -10,12 +10,15 @@ namespace CleanArchitecture.Worker
     {
         private readonly ILoggerAdapter<Worker> _logger;
         private readonly IEntryPointService _entryPointService;
+        private readonly WorkerSettings _settings;
 
         public Worker(ILoggerAdapter<Worker> logger,
-            IEntryPointService entryPointService)
+            IEntryPointService entryPointService,
+            WorkerSettings settings)
         {
             _logger = logger;
             _entryPointService = entryPointService;
+            _settings = settings;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -24,7 +27,7 @@ namespace CleanArchitecture.Worker
             while (!stoppingToken.IsCancellationRequested)
             {
                 await _entryPointService.ExecuteAsync();
-                await Task.Delay(1000, stoppingToken); // TODO: Move delay to appSettings
+                await Task.Delay(_settings.DelayMilliseconds, stoppingToken);
             }
             _logger.LogInformation("CleanArchitecture.Worker service stopping at: {time}", DateTimeOffset.Now);
         }

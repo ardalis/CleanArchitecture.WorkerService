@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace CleanArchitecture.Worker
 {
@@ -22,6 +23,11 @@ namespace CleanArchitecture.Worker
                     services.AddSingleton<IEntryPointService, EntryPointService>();
                     services.AddSingleton<IQueueReceiver, InMemoryQueueReceiver>();
                     services.AddSingleton<IQueueSender, InMemoryQueueSender>();
+                    
+                    var settings = new WorkerSettings();
+                    hostContext.Configuration.Bind(nameof(WorkerSettings), settings);      
+                    services.AddSingleton(settings);
+
                     services.AddHostedService<Worker>();
                 });
     }
