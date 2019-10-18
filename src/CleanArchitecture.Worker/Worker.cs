@@ -1,18 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CleanArchitecture.Core.Interfaces;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Worker
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILoggerAdapter<Worker> _logger;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILoggerAdapter<Worker> logger)
         {
             _logger = logger;
         }
