@@ -13,7 +13,7 @@ namespace CleanArchitecture.UnitTests
         public async Task LogsExceptionsEncountered()
         {
             var logger = new Mock<ILoggerAdapter<EntryPointService>>();
-            var service = new EntryPointService(logger.Object, null, null);
+            var service = new EntryPointService(logger.Object, null, null, null);
 
             await service.ExecuteAsync();
 
