@@ -13,7 +13,16 @@ namespace CleanArchitecture.Worker
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var hostBuilder = CreateHostBuilder(args).Build();
+
+            // seed some queue messages
+            var queueSender = (IQueueSender)hostBuilder.Services.GetRequiredService(typeof(IQueueSender));
+            for (int i = 0; i < 10; i++)
+            {
+                queueSender.SendMessageToQueue("https://google.com", "urlcheck");
+            }
+
+            hostBuilder.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,12 +31,12 @@ namespace CleanArchitecture.Worker
                 {
                     services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
                     services.AddSingleton<IEntryPointService, EntryPointService>();
-                    services.AddSingleton<IQueueReceiver, InMemoryQueueReceiver>();
-                    services.AddSingleton<IQueueSender, InMemoryQueueSender>();
 
                     // Infrastructure.ContainerSetup
+                    services.AddMessageQueues();
                     services.AddDbContext(hostContext.Configuration); 
                     services.AddRepositories();
+                    services.AddUrlCheckingServices();
 
                     var workerSettings = new WorkerSettings();
                     hostContext.Configuration.Bind(nameof(WorkerSettings), workerSettings);

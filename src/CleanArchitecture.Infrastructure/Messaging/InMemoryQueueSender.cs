@@ -7,7 +7,7 @@ namespace CleanArchitecture.Infrastructure.Messaging
     {
         public async Task SendMessageToQueue(string message, string queueName)
         {
-            await Task.CompletedTask;
+            InMemoryQueueReceiver.MessageQueue.Enqueue(message);
         }
     }
 }

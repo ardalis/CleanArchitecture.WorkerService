@@ -14,18 +14,21 @@ namespace CleanArchitecture.Core.Services
         private readonly IQueueReceiver _queueReceiver;
         private readonly IQueueSender _queueSender;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IUrlStatusChecker _urlStatusChecker;
 
         public EntryPointService(ILoggerAdapter<EntryPointService> logger,
             EntryPointSettings settings,
             IQueueReceiver queueReceiver,
             IQueueSender queueSender,
-            IServiceScopeFactory serviceScopeFactory)
+            IServiceScopeFactory serviceScopeFactory,
+            IUrlStatusChecker urlStatusChecker)
         {
             _logger = logger;
             _settings = settings;
             _queueReceiver = queueReceiver;
             _queueSender = queueSender;
             _serviceScopeFactory = serviceScopeFactory;
+            _urlStatusChecker = urlStatusChecker;
         }
 
         public async Task ExecuteAsync()
@@ -33,26 +36,22 @@ namespace CleanArchitecture.Core.Services
             _logger.LogInformation("{service} running at: {time}", nameof(EntryPointService), DateTimeOffset.Now);
             try
             {
-                // create a scope
+                // EF Requires a scope so we are creating one per execution here
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var repository =
                         scope.ServiceProvider
                             .GetRequiredService<IRepository>();
 
-                // read from the queue
-                await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);
+                    // read from the queue
+                    string message = await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);
+                    if (String.IsNullOrEmpty(message)) return;
 
-                // check 1 URL in the message
-                var statusHistory = new UrlStatusHistory
-                {
-                    RequestId = "n/a",
-                    StatusCode = 200,
-                    Uri = "http://ardalis.com"
-                };
+                    // check 1 URL in the message
+                    var statusHistory = await _urlStatusChecker.CheckUrlAsync(message, "");
 
-                // record HTTP status / response time / maybe existence of keyword in database
-                repository.Add(statusHistory);
+                    // record HTTP status / response time / maybe existence of keyword in database
+                    repository.Add(statusHistory);
                 }
             }
             catch (Exception ex)
