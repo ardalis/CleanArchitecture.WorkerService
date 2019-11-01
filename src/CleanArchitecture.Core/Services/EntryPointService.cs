@@ -44,7 +44,6 @@ namespace CleanArchitecture.Core.Services
                 await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);
 
                 // check 1 URL in the message
-
                 var statusHistory = new UrlStatusHistory
                 {
                     RequestId = "n/a",
