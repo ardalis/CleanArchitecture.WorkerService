@@ -25,6 +25,10 @@ namespace CleanArchitecture.Worker
                     services.AddSingleton<IQueueReceiver, InMemoryQueueReceiver>();
                     services.AddSingleton<IQueueSender, InMemoryQueueSender>();
 
+                    // Infrastructure.ContainerSetup
+                    services.AddDbContext(hostContext.Configuration); 
+                    services.AddRepositories();
+
                     var workerSettings = new WorkerSettings();
                     hostContext.Configuration.Bind(nameof(WorkerSettings), workerSettings);
                     services.AddSingleton(workerSettings);
