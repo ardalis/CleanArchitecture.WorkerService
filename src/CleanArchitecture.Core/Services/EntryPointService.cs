@@ -13,21 +13,21 @@ namespace CleanArchitecture.Core.Services
         private readonly EntryPointSettings _settings;
         private readonly IQueueReceiver _queueReceiver;
         private readonly IQueueSender _queueSender;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IServiceLocator _serviceScopeFactoryLocator;
         private readonly IUrlStatusChecker _urlStatusChecker;
 
         public EntryPointService(ILoggerAdapter<EntryPointService> logger,
             EntryPointSettings settings,
             IQueueReceiver queueReceiver,
             IQueueSender queueSender,
-            IServiceScopeFactory serviceScopeFactory,
+            IServiceLocator serviceScopeFactoryLocator,
             IUrlStatusChecker urlStatusChecker)
         {
             _logger = logger;
             _settings = settings;
             _queueReceiver = queueReceiver;
             _queueSender = queueSender;
-            _serviceScopeFactory = serviceScopeFactory;
+            _serviceScopeFactoryLocator = serviceScopeFactoryLocator;
             _urlStatusChecker = urlStatusChecker;
         }
 
@@ -37,22 +37,20 @@ namespace CleanArchitecture.Core.Services
             try
             {
                 // EF Requires a scope so we are creating one per execution here
-                using (var scope = _serviceScopeFactory.CreateScope())
-                {
+                using var scope = _serviceScopeFactoryLocator.CreateScope();
                     var repository =
                         scope.ServiceProvider
                             .GetRequiredService<IRepository>();
 
-                    // read from the queue
-                    string message = await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);
-                    if (String.IsNullOrEmpty(message)) return;
+                // read from the queue
+                string message = await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);
+                if (String.IsNullOrEmpty(message)) return;
 
-                    // check 1 URL in the message
-                    var statusHistory = await _urlStatusChecker.CheckUrlAsync(message, "");
+                // check 1 URL in the message
+                var statusHistory = await _urlStatusChecker.CheckUrlAsync(message, "");
 
-                    // record HTTP status / response time / maybe existence of keyword in database
-                    repository.Add(statusHistory);
-                }
+                // record HTTP status / response time / maybe existence of keyword in database
+                repository.Add(statusHistory);
             }
             catch (Exception ex)
             {
