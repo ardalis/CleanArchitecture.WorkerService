@@ -40,7 +40,7 @@ namespace CleanArchitecture.Core.Services
                 using var scope = _serviceScopeFactoryLocator.CreateScope();
                     var repository =
                         scope.ServiceProvider
-                            .GetRequiredService<IRepository>();
+                            .GetService<IRepository>();
 
                 // read from the queue
                 string message = await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);

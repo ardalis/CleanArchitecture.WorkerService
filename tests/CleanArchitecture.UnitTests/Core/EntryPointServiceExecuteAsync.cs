@@ -11,7 +11,7 @@ namespace CleanArchitecture.UnitTests
 {
     public class EntryPointServiceExecuteAsync
     {
-        private static (EntryPointService, Mock<ILoggerAdapter<EntryPointService>>, Mock<IQueueReceiver>, Mock<IServiceLocator>) Factory()
+        private static (EntryPointService, Mock<ILoggerAdapter<EntryPointService>>, Mock<IQueueReceiver>, Mock<IServiceLocator>, Mock<IRepository>) Factory()
         {
             var logger = new Mock<ILoggerAdapter<EntryPointService>>();
             var settings = new EntryPointSettings
@@ -21,43 +21,54 @@ namespace CleanArchitecture.UnitTests
             var queueReceiver = new Mock<IQueueReceiver>();
             var serviceLocator = new Mock<IServiceLocator>();
 
-            var serviceProvider = SetupCreateScope(serviceLocator);
-
-            // GetRequiredService is an extension method, I don't know how to continue
-            serviceProvider.Setup(sp => sp.GetRequiredService(typeof(IRepository)))
-                .Returns(new Mock<IRepository>());
+            // maybe a tuple later on
+            var repository = SetupCreateScope(serviceLocator);
 
             var service = new EntryPointService(logger.Object, settings, queueReceiver.Object, null, serviceLocator.Object, null);
-            return (service, logger, queueReceiver, serviceLocator);
+            return (service, logger, queueReceiver, serviceLocator, repository);
         }
 
-        private static Mock<IServiceProvider> SetupCreateScope(Mock<IServiceLocator> serviceLocator)
+        private static Mock<IRepository> SetupCreateScope(Mock<IServiceLocator> serviceLocator)
         {
-            Mock<IServiceScope> scope = new Mock<IServiceScope>();
+            var fakeScope = new Mock<IServiceScope>();
             serviceLocator.Setup(sl => sl.CreateScope())
-                            .Returns(scope.Object);
-            Mock<IServiceProvider> serviceProvider = new Mock<IServiceProvider>();
-            scope.Setup(s => s.ServiceProvider)
+                            .Returns(fakeScope.Object);
+
+            var serviceProvider = new Mock<IServiceProvider>();
+            fakeScope.Setup(s => s.ServiceProvider)
                 .Returns(serviceProvider.Object);
 
-            return serviceProvider;
+            return SetupCustomInjection(serviceProvider);
+        }
+
+        private static Mock<IRepository> SetupCustomInjection(Mock<IServiceProvider> serviceProvider)
+        {
+            // GetRequiredService is an extension method, but GetService is not
+            var repository = new Mock<IRepository>();
+            serviceProvider.Setup(sp => sp.GetService(typeof(IRepository)))
+                .Returns(repository.Object);
+
+            // return a tuple as you have more dependencies
+            return repository;
         }
 
         [Fact]
         public async Task LogsExceptionsEncountered()
         {
-            var (service, logger, _, _) = Factory();
+            var (service, logger, queueReceiver, _, _) = Factory();
+            queueReceiver.Setup(qr => qr.GetMessageFromQueue(It.IsAny<string>()))
+                .ThrowsAsync(new Exception("Boom!"));
 
             await service.ExecuteAsync();
 
-            logger.Verify(l => l.LogError(It.IsAny<NullReferenceException>(), It.IsAny<string>()), Times.Once);
+            logger.Verify(l => l.LogError(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
-    
+
         [Fact]
         public async Task MessageWasRetrievedFromTheQueue()
         {
             // example of getting inside of the CreateScope
-            var (service, _, queueReceiver, _) = Factory();
+            var (service, _, queueReceiver, _, _) = Factory();
 
             await service.ExecuteAsync();
 
