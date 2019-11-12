@@ -31,6 +31,7 @@ namespace CleanArchitecture.Worker
                 {
                     services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
                     services.AddSingleton<IEntryPointService, EntryPointService>();
+                    services.AddSingleton<IServiceLocator, ServiceScopeFactoryLocator>();
 
                     // Infrastructure.ContainerSetup
                     services.AddMessageQueues();
