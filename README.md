@@ -2,6 +2,10 @@
 
 A solution template using Clean Architecture for building a .NET Core Worker Service.
 
+## Give a Star! :star:
+
+If you like or are using this project to learn or start your solution, please give it a star. Thanks!
+
 ## Getting Started
 
 This app is currently configured to run against a localdb SQL Server instance. To configure this, you will need to run `dotnet ef database update` before running the app. Check the connection string in `appsettings.json` in the CleanArchitecture.Worker project
@@ -19,3 +23,13 @@ To use this as a template for your own worker server projects, make the followin
 - Replace InMemory queue implementations with Azure, AWS, Rabbit, etc. actual queues you're using
 - Remove UrlStatusHistory and related services and interfaces
 
+## References
+
+- [Clean Architecture template for ASP.NET Core solutions](https://github.com/ardalis/CleanArchitecture)
+- [Creating a Clean Architecture Worker Service Template](https://www.youtube.com/watch?v=_jfnnAMNb94) ([Twitch](https://twitch.tv/ardalis) Stream 1)
+- [Creating a Clean Architecture Worker Service Template](https://www.youtube.com/watch?v=Nttt33GoTXg) ([Twitch](https://twitch.tv/ardalis) Stream 2)
+
+Useful Pluralsight courses:
+- [SOLID Principles of Object Oriented Design](https://www.pluralsight.com/courses/principles-oo-design)
+- [SOLID Principles for C# Developers](https://www.pluralsight.com/courses/csharp-solid-principles)
+- [Domain-Driven Design Fundamentals](https://www.pluralsight.com/courses/domain-driven-design-fundamentals)
