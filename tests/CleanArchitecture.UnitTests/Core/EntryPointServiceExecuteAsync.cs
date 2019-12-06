@@ -74,5 +74,23 @@ namespace CleanArchitecture.UnitTests
 
             queueReceiver.Verify(qr => qr.GetMessageFromQueue("testQueue"), Times.Once);
         }
+
+        [Fact]
+        public async Task MessageWasRetrievedFromTheQueue_WorksManyTimes()
+        {
+            // simulate multiple runs, but doesn't actually make the disposed object exception happen.
+            // avoid {"Cannot access a disposed object.\r\nObject name: 'IServiceProvider'."}
+            var (service, _, _, _, _) = Factory();
+            await service.ExecuteAsync();
+            await service.ExecuteAsync();
+            await service.ExecuteAsync();
+            await service.ExecuteAsync();
+            var (service2, _, _, _, _) = Factory();
+            await service2.ExecuteAsync();
+            var (service3, _, _, _, _) = Factory();
+            await service3.ExecuteAsync();
+
+            Assert.True(true);
+        }
     }
 }

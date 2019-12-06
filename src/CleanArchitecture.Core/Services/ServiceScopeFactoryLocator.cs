@@ -25,8 +25,8 @@ namespace CleanArchitecture.Core.Services
 
         public IServiceScope CreateScope()
         {
-            if (_scope == null)
-                _scope = _factory.CreateScope();
+            // if (_scope == null) comment this out to avoid {"Cannot access a disposed object.\r\nObject name: 'IServiceProvider'."}
+            _scope = _factory.CreateScope();
             return _scope;
         }
 
