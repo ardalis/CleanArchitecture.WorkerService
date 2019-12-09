@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1903 AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1903 AS build
 WORKDIR /src
 COPY ["src/CleanArchitecture.Worker/CleanArchitecture.Worker.csproj", "src/CleanArchitecture.Worker/"]
 RUN dotnet restore "src/CleanArchitecture.Worker/CleanArchitecture.Worker.csproj"
