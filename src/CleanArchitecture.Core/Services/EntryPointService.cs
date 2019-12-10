@@ -52,12 +52,14 @@ namespace CleanArchitecture.Core.Services
                 // record HTTP status / response time / maybe existence of keyword in database
                 repository.Add(statusHistory);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{nameof(EntryPointService)}.{nameof(ExecuteAsync)} threw an exception.");
                 // TODO: Decide if you want to re-throw which will crash the worker service
                 //throw;
             }
+#pragma warning restore CA1031 // Do not catch general exception types
         }
     }
 }
