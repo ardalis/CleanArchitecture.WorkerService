@@ -1,7 +1,6 @@
 using CleanArchitecture.Core.Interfaces;
 using CleanArchitecture.Core.Services;
 using CleanArchitecture.Infrastructure;
-using CleanArchitecture.Infrastructure.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,16 +12,16 @@ namespace CleanArchitecture.Worker
     {
         public static void Main(string[] args)
         {
-            var hostBuilder = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             // seed some queue messages
-            var queueSender = (IQueueSender)hostBuilder.Services.GetRequiredService(typeof(IQueueSender));
+            var queueSender = (IQueueSender)host.Services.GetRequiredService(typeof(IQueueSender));
             for (int i = 0; i < 10; i++)
             {
                 queueSender.SendMessageToQueue("https://google.com", "urlcheck");
             }
 
-            hostBuilder.Run();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -35,7 +34,7 @@ namespace CleanArchitecture.Worker
 
                     // Infrastructure.ContainerSetup
                     services.AddMessageQueues();
-                    services.AddDbContext(hostContext.Configuration); 
+                    services.AddDbContext(hostContext.Configuration);
                     services.AddRepositories();
                     services.AddUrlCheckingServices();
 
@@ -47,7 +46,27 @@ namespace CleanArchitecture.Worker
                     hostContext.Configuration.Bind(nameof(EntryPointSettings), entryPointSettings);
                     services.AddSingleton(entryPointSettings);
 
+                    // examples of different ways to add instances and lifetimes
+                    services.AddTransient<IOrderService, OrderService>();
+                    services.AddScoped<IOrderRepository, OrderRepository>();
+                    services.AddSingleton<IConnectionManager, ConnectionManager>();
+                    services.AddSingleton<SomeInstance>(new SomeInstance());
+
                     services.AddHostedService<Worker>();
                 });
     }
+
+
+
+
+
+
+
+    public interface IOrderService { }
+    public class OrderService : IOrderService { }
+    public interface IOrderRepository { }
+    public class OrderRepository : IOrderRepository { }
+    public interface IConnectionManager { }
+    public class ConnectionManager : IConnectionManager { }
+    public class SomeInstance { }
 }
