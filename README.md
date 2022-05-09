@@ -1,6 +1,6 @@
 # CleanArchitecture.WorkerService
 
-A solution template using Clean Architecture for building a .NET Core 3.1 Worker Service.
+A solution template using Clean Architecture for building a .NET 6.0 Worker Service.
 
 ## Give a Star! :star:
 
@@ -12,7 +12,7 @@ Big thanks to [all of the great contributors to this project](https://github.com
 
 ## Getting Started
 
-Install the ef core cli tools `dotnet tool install --global dotnet-ef`. If you already have an old version, first try `dotnet tool update --global dotnet-ef  --version 3.1.0-*`, if that doesn't work, see [Updating Ef Core Cli](https://github.com/aspnet/EntityFrameworkCore/issues/14016#issuecomment-487308603) First, delete C:\Users\{yourUser}\.dotnet\tools\.store\dotnet-ef tool.
+Install the ef core cli tools `dotnet tool install --global dotnet-ef`. If you already have an old version, first try `dotnet tool update --global dotnet-ef  --version 6.0.0-*`, if that doesn't work, see [Updating Ef Core Cli](https://github.com/aspnet/EntityFrameworkCore/issues/14016#issuecomment-487308603) First, delete C:\Users\{yourUser}\.dotnet\tools\.store\dotnet-ef tool.
 
 This app is currently configured to run against a localdb SQL Server instance. To configure this, you will need to run `dotnet ef database update` in the src\CleanArchitecture.Worker folder before running the app. 
 
