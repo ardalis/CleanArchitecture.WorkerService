@@ -12,13 +12,19 @@ Big thanks to [all of the great contributors to this project](https://github.com
 
 ## Getting Started
 
+Clone or download the repository.
+
 Install the ef core cli tools `dotnet tool install --global dotnet-ef`. If you already have an old version, first try `dotnet tool update --global dotnet-ef  --version 6.0.0-*`, if that doesn't work, see [Updating Ef Core Cli](https://github.com/aspnet/EntityFrameworkCore/issues/14016#issuecomment-487308603) First, delete C:\Users\{yourUser}\.dotnet\tools\.store\dotnet-ef tool.
 
-This app is currently configured to run against a localdb SQL Server instance. To configure this, you will need to run `dotnet ef database update` in the src\CleanArchitecture.Worker folder before running the app. 
+This app is currently configured to run against a localdb SQL Server instance. To initialized the database, you will need to run this command in the /src/CleanArchitecture.Worker folder:
 
-Check the connection string in `appsettings.json` in the CleanArchitecture.Worker project
+```powershell
+dotnet ef database update -c appdbcontext -p ../CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj -s CleanArchitecture.Worker.csproj
+```
 
-Clone or download the repository. Open it in Visual Studio and run it with ctrl-F5 or in the console go to the `src/CleanArchitecture.Worker` folder and run `dotnet run`.
+Check the connection string in `appsettings.json` in the CleanArchitecture.Worker project to verify its details if you have problems.
+
+Open the solution in Visual Studio and run it with ctrl-F5 (the CleanArchitecture.Worker project should be the startup project) or in the console go to the `src/CleanArchitecture.Worker` folder and run `dotnet run`.
 
 On startup the app queues up 10 URLs to hit (google.com) and you should see it make 10 requests and save them to the database and then do nothing, logging each second.
 
