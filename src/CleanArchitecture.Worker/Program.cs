@@ -46,27 +46,7 @@ namespace CleanArchitecture.Worker
                     hostContext.Configuration.Bind(nameof(EntryPointSettings), entryPointSettings);
                     services.AddSingleton(entryPointSettings);
 
-                    // examples of different ways to add instances and lifetimes
-                    services.AddTransient<IOrderService, OrderService>();
-                    services.AddScoped<IOrderRepository, OrderRepository>();
-                    services.AddSingleton<IConnectionManager, ConnectionManager>();
-                    services.AddSingleton<SomeInstance>(new SomeInstance());
-
                     services.AddHostedService<Worker>();
                 });
     }
-
-
-
-
-
-
-
-    public interface IOrderService { }
-    public class OrderService : IOrderService { }
-    public interface IOrderRepository { }
-    public class OrderRepository : IOrderRepository { }
-    public interface IConnectionManager { }
-    public class ConnectionManager : IConnectionManager { }
-    public class SomeInstance { }
 }

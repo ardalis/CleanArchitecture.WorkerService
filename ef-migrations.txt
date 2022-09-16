@@ -1,2 +1,4 @@
 -- run from CleanArchitecture.Worker project folder
 dotnet ef migrations add InitialModel --context appdbcontext -p ../CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj -s CleanArchitecture.Worker.csproj -o Data/Migrations
+
+dotnet ef database update -c appdbcontext -p ../CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj -s CleanArchitecture.Worker.csproj
