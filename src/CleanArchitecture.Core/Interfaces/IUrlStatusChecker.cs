@@ -1,10 +1,9 @@
 ﻿using CleanArchitecture.Core.Entities;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Core.Interfaces
+namespace CleanArchitecture.Core.Interfaces;
+
+public interface IUrlStatusChecker
 {
-    public interface IUrlStatusChecker
-    {
-        Task<UrlStatusHistory> CheckUrlAsync(string url, string requestId);
-    }
+  Task<UrlStatusHistory> CheckUrlAsync(string url, string requestId);
 }

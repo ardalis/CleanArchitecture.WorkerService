@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace CleanArchitecture.Core.Interfaces
+namespace CleanArchitecture.Core.Interfaces;
+
+public interface IQueueSender
 {
-    public interface IQueueSender
-    {
-        Task SendMessageToQueue(string message, string queueName);
-    }
+  Task SendMessageToQueue(string message, string queueName);
 }

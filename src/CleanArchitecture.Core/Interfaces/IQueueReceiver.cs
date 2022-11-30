@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace CleanArchitecture.Core.Interfaces
+namespace CleanArchitecture.Core.Interfaces;
+
+public interface IQueueReceiver
 {
-    public interface IQueueReceiver
-    {
-        Task<string> GetMessageFromQueue(string queueName);
-    }
+  Task<string> GetMessageFromQueue(string queueName);
 }

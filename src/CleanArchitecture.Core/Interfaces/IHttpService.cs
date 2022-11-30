@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace CleanArchitecture.Core.Interfaces
+namespace CleanArchitecture.Core.Interfaces;
+
+public interface IHttpService
 {
-    public interface IHttpService
-    {
-        Task<int> GetUrlResponseStatusCodeAsync(string url);
-    }
+  Task<int> GetUrlResponseStatusCodeAsync(string url);
 }

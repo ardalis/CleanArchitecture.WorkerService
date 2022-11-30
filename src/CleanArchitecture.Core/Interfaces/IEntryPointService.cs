@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace CleanArchitecture.Core.Interfaces
+namespace CleanArchitecture.Core.Interfaces;
+
+public interface IEntryPointService
 {
-    public interface IEntryPointService
-    {
-        Task ExecuteAsync();
-    }
+  Task ExecuteAsync();
 }

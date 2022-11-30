@@ -2,20 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace CleanArchitecture.Infrastructure.Data
+namespace CleanArchitecture.Infrastructure.Data;
+
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
-    {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
+  public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+  {
+  }
 
-        public DbSet<UrlStatusHistory> UrlStatusHistories { get; set; }
+  public DbSet<UrlStatusHistory> UrlStatusHistories { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
-    }
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+    base.OnModelCreating(modelBuilder);
+    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+  }
 }

@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.Core.Services
+namespace CleanArchitecture.Core.Services;
+
+public interface IServiceLocator : IDisposable
 {
-    public interface IServiceLocator : IDisposable
-    {
-        IServiceScope CreateScope();
-        T Get<T>();
-    }
+  IServiceScope CreateScope();
+  T Get<T>();
 }
