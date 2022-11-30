@@ -1,6 +1,6 @@
 # CleanArchitecture.WorkerService
 
-A solution template using Clean Architecture for building a .NET 6.0 Worker Service.
+A solution template using Clean Architecture for building a .NET 7.0 Worker Service.
 
 ## Give a Star! :star:
 
