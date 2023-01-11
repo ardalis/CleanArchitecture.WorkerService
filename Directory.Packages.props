@@ -34,7 +34,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
 		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
-		<PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.0" />
+		<PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.2" />
 		<PackageVersion Include="Moq" Version="4.18.2" />
 		<PackageVersion Include="Newtonsoft.Json" Version="13.0.2-beta2" />
 		<PackageVersion Include="ReportGenerator" Version="5.1.12" />
