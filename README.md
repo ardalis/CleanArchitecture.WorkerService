@@ -10,6 +10,10 @@ If you like or are using this project to learn or start your solution, please gi
 
 Big thanks to [all of the great contributors to this project](https://github.com/ardalis/CleanArchitecture.WorkerService/graphs/contributors)!
 
+## Build Status 
+
+[![.NET Core](https://github.com/ardalis/CleanArchitecture.WorkerService/actions/workflows/dotnetcore.yml/badge.svg)](https://github.com/ardalis/CleanArchitecture.WorkerService/actions/workflows/dotnetcore.yml)
+
 ## Getting Started
 
 Clone or download the repository.
