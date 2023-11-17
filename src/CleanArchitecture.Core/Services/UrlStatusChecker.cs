@@ -8,15 +8,8 @@ namespace CleanArchitecture.Core.Services;
 /// <summary>
 /// A simple service that fetches a URL and returns a UrlStatusHistory instance with the result
 /// </summary>
-public class UrlStatusChecker : IUrlStatusChecker
+public class UrlStatusChecker(IHttpService _httpService) : IUrlStatusChecker
 {
-  private readonly IHttpService _httpService;
-
-  public UrlStatusChecker(IHttpService httpService)
-  {
-    _httpService = httpService;
-  }
-
   public async Task<UrlStatusHistory> CheckUrlAsync(string url, string requestId)
   {
     Guard.Against.NullOrWhiteSpace(url, nameof(url));

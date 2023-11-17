@@ -9,30 +9,12 @@ namespace CleanArchitecture.Core.Services;
 /// <summary>
 /// An example service that performs business logic
 /// </summary>
-public class EntryPointService : IEntryPointService
+public class EntryPointService(ILoggerAdapter<EntryPointService> _logger,
+    EntryPointSettings _settings,
+    IQueueReceiver _queueReceiver,
+    IServiceLocator _serviceScopeFactoryLocator,
+    IUrlStatusChecker _urlStatusChecker) : IEntryPointService
 {
-  private readonly ILoggerAdapter<EntryPointService> _logger;
-  private readonly EntryPointSettings _settings;
-  private readonly IQueueReceiver _queueReceiver;
-  private readonly IQueueSender _queueSender;
-  private readonly IServiceLocator _serviceScopeFactoryLocator;
-  private readonly IUrlStatusChecker _urlStatusChecker;
-
-  public EntryPointService(ILoggerAdapter<EntryPointService> logger,
-      EntryPointSettings settings,
-      IQueueReceiver queueReceiver,
-      IQueueSender queueSender,
-      IServiceLocator serviceScopeFactoryLocator,
-      IUrlStatusChecker urlStatusChecker)
-  {
-    _logger = logger;
-    _settings = settings;
-    _queueReceiver = queueReceiver;
-    _queueSender = queueSender;
-    _serviceScopeFactoryLocator = serviceScopeFactoryLocator;
-    _urlStatusChecker = urlStatusChecker;
-  }
-
   public async Task ExecuteAsync()
   {
     _logger.LogInformation("{service} running at: {time}", nameof(EntryPointService), DateTimeOffset.Now);

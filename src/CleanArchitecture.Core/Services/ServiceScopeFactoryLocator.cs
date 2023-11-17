@@ -6,15 +6,9 @@ namespace CleanArchitecture.Core.Services;
 /// A wrapper around ServiceScopeFactory to make it easier to fake out with MOQ.
 /// </summary>
 /// <see cref="https://stackoverflow.com/a/53509491/54288"/>
-public sealed class ServiceScopeFactoryLocator : IServiceLocator
+public sealed class ServiceScopeFactoryLocator(IServiceScopeFactory _factory) : IServiceLocator
 {
-  private readonly IServiceScopeFactory _factory;
   private IServiceScope _scope;
-
-  public ServiceScopeFactoryLocator(IServiceScopeFactory factory)
-  {
-    _factory = factory;
-  }
 
   public T Get<T>()
   {
