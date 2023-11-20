@@ -8,15 +8,8 @@ namespace CleanArchitecture.Infrastructure;
 /// An ILoggerAdapter implementation that uses Microsoft.Extensions.Logging
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class LoggerAdapter<T> : ILoggerAdapter<T>
+public class LoggerAdapter<T>(ILogger<T> _logger) : ILoggerAdapter<T>
 {
-  private readonly ILogger<T> _logger;
-
-  public LoggerAdapter(ILogger<T> logger)
-  {
-    _logger = logger;
-  }
-
   public void LogError(Exception ex, string message, params object[] args)
   {
     _logger.LogError(ex, message, args);

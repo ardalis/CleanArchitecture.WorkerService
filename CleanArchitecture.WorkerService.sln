@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln", "sln", "{2DD960C4-7461-4547-9983-3E3034D2B0C6}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 		ef-migrations.txt = ef-migrations.txt
 		global.json = global.json

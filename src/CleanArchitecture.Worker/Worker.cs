@@ -11,21 +11,10 @@ namespace CleanArchitecture.Worker;
 /// It should not contain any business logic but should call an entrypoint service that
 /// execute once per time period.
 /// </summary>
-public class Worker : BackgroundService
+public class Worker(ILoggerAdapter<Worker> _logger,
+    IEntryPointService _entryPointService,
+    WorkerSettings _settings) : BackgroundService
 {
-  private readonly ILoggerAdapter<Worker> _logger;
-  private readonly IEntryPointService _entryPointService;
-  private readonly WorkerSettings _settings;
-
-  public Worker(ILoggerAdapter<Worker> logger,
-      IEntryPointService entryPointService,
-      WorkerSettings settings)
-  {
-    _logger = logger;
-    _entryPointService = entryPointService;
-    _settings = settings;
-  }
-
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
     _logger.LogInformation("CleanArchitecture.Worker service starting at: {time}", DateTimeOffset.Now);
