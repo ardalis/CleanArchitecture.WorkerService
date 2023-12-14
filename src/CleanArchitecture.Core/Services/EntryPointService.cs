@@ -28,7 +28,7 @@ public class EntryPointService(ILoggerAdapter<EntryPointService> _logger,
 
       // read from the queue
       string message = await _queueReceiver.GetMessageFromQueue(_settings.ReceivingQueueName);
-      if (String.IsNullOrEmpty(message)) return;
+      if (string.IsNullOrEmpty(message)) return;
 
       // check 1 URL in the message
       var statusHistory = await _urlStatusChecker.CheckUrlAsync(message, "");
