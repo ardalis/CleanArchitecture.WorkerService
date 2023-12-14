@@ -20,11 +20,12 @@ public class EntryPointServiceExecuteAsync
     };
     var queueReceiver = new Mock<IQueueReceiver>();
     var serviceLocator = new Mock<IServiceLocator>();
+    var urlStatusChecker = new Mock<IUrlStatusChecker>();
 
     // maybe a tuple later on
     var repository = SetupCreateScope(serviceLocator);
 
-    var service = new EntryPointService(logger.Object, settings, queueReceiver.Object, null, serviceLocator.Object, null);
+    var service = new EntryPointService(logger.Object, settings, queueReceiver.Object, serviceLocator.Object, urlStatusChecker.Object);
     return (service, logger, queueReceiver, serviceLocator, repository);
   }
 

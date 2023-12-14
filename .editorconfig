@@ -80,6 +80,11 @@ dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
 ###############################
+# IDE EditorConfig Settings   #
+###############################
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+###############################
 # C# Coding Conventions       #
 ###############################
 [*.cs]
