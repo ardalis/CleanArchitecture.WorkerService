@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Ardalis.CleanArchitecture.WorkerService.Template</id>
+    <title>ASP.NET Core Clean Architecture Solution for Worker Service</title>
+    <version>9.1.2</version>
+    <authors>Steve Smith</authors>
+    <description>
+      The Clean Architecture Solution Template for Worker service popularized by Steve @ardalis Smith.
+    </description>
+    <language>en-US</language>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/ardalis/CleanArchitecture.WorkerService</projectUrl>
+    <releaseNotes>
+      Fixes MimeKit disonnect issue.
+    </releaseNotes>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+    <tags>Web ASP.NET "Clean Architecture" ddd domain-driven-design clean-architecture clean architecture ardalis SOLID</tags>
+    <icon>./content/icon.png</icon>
+    <readme>README.md</readme>
+  </metadata>
+  <files>
+    <file src=".\**" target="content" exclude="**\bin\**;**\obj\**;**\.git\**;**\.github\**;**\*.user;**\.vs\**;**\.vscode\**;**\.gitignore;**\sample\**" />
+    <file src="README.md" />
+  </files>
+</package>
