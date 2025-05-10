@@ -3,7 +3,7 @@
   <metadata>
     <id>Ardalis.CleanArchitecture.WorkerService.Template</id>
     <title>ASP.NET Core Clean Architecture Solution for Worker Service</title>
-    <version>9.1.2</version>
+    <version>1.0.0</version>
     <authors>Steve Smith</authors>
     <description>
       The Clean Architecture Solution Template for Worker service popularized by Steve @ardalis Smith.
